@@ -1,7 +1,7 @@
 export default {
   target: 'static',
   router: {
-    base: '/powerku.github.io /',
+    base: '/today-basketball/',
   },
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
