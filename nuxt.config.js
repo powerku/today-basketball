@@ -1,6 +1,8 @@
 export default {
   target: 'static',
-
+  router: {
+    base: '/powerku.github.io /',
+  },
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: '농구 순번 계산기',
