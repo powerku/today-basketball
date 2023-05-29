@@ -18,7 +18,9 @@ export default {
         content: '선수들 순서를 계산해주는 사이트',
       },
     ],
-    link: [{ rel: 'icon', type: 'image/png', href: '/favicon.ico' }],
+    link: [
+      { rel: 'icon', type: 'image/png', href: '/today-basketball/favicon.ico' },
+    ],
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
