@@ -30,6 +30,7 @@ export default {
   buildModules: [
     // https://go.nuxtjs.dev/eslint
     '@nuxtjs/eslint-module',
+    '@nuxtjs/vuetify',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -46,13 +47,15 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-    babel:{
+    babel: {
       plugins: [
         ['@babel/plugin-proposal-class-properties', { loose: true }],
         ['@babel/plugin-proposal-private-methods', { loose: true }],
-        ['@babel/plugin-proposal-private-property-in-object', { loose: true }]
-      ]
-    }
-
+        ['@babel/plugin-proposal-private-property-in-object', { loose: true }],
+      ],
+    },
+  },
+  vuetify: {
+    defaultAssets: { icons: 'fa' },
   },
 }
