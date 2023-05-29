@@ -1,4 +1,6 @@
 export default {
+  target: 'static',
+
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: '농구 순번 계산기',
