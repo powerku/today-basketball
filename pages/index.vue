@@ -14,14 +14,14 @@
       <div class="gx-5 align-items-center">
         <div class="d-flex justify-content-center mt-xxl-0 flex-column">
           <div class="title">
-            <v-btn class="button" icon @click="prevButtonHandler">
+            <v-btn class="nextButton" icon @click="prevButtonHandler">
               <v-icon>fa-solid fa-angle-left</v-icon>
               이전
             </v-btn>
             <v-subheader class="h2 justify-content-center mt-xxl-0">{{
               quarterInfo
             }}</v-subheader>
-            <v-btn class="button" icon @click="nextButtonHandler">
+            <v-btn class="prevButton" icon @click="nextButtonHandler">
               다음
               <v-icon>fa-solid fa-angle-right</v-icon>
             </v-btn>
@@ -334,7 +334,10 @@ section {
   flex-direction: row;
   align-items: flex-start;
 }
-.button {
+.nextButton {
+  height: 48px;
+}
+.prevButton {
   height: 48px;
 }
 </style>
