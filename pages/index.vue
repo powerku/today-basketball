@@ -342,7 +342,7 @@ section {
 .title {
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: flex-start;
 }
 
 </style>
