@@ -14,10 +14,62 @@
       <div class="gx-5 align-items-center">
         <div class="d-flex justify-content-center mt-xxl-0 flex-column">
           <div class="title">
+            <v-btn class="button" icon @click="prevButtonHandler">
+              <v-icon>fa-solid fa-angle-left</v-icon>
+              이전
+            </v-btn>
             <v-subheader class="h2 justify-content-center mt-xxl-0">{{
               quarterInfo
             }}</v-subheader>
+            <v-btn class="button" icon @click="nextButtonHandler">
+              다음
+              <v-icon>fa-solid fa-angle-right</v-icon>
+            </v-btn>
           </div>
+          <v-simple-table class="justify-content-center mt-xxl-0 d-flex">
+            <template #default>
+              <thead>
+                <tr>
+                  <th class="text-left">팀</th>
+                  <th class="text-left">뛰는 선수</th>
+                  <th class="text-left">휴식 선수</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="item in teams" :key="item.title">
+                  <td>{{ item.title }}</td>
+                  <td>
+                    {{
+                      item.players
+                        .map((player, index) => {
+                          if (player.icon.includes('running')) {
+                            return index + 1
+                          } else {
+                            return null
+                          }
+                        })
+                        .filter((value) => value !== null)
+                        .join()
+                    }}
+                  </td>
+                  <td>
+                    {{
+                      item.players
+                        .map((player, index) => {
+                          if (!player.icon.includes('running')) {
+                            return index + 1
+                          } else {
+                            return null
+                          }
+                        })
+                        .filter((value) => value !== null)
+                        .join()
+                    }}
+                  </td>
+                </tr>
+              </tbody>
+            </template>
+          </v-simple-table>
           <div class="match-players-wrapper">
             <MatchPlayers
               v-for="(team, i) in teams"
@@ -35,16 +87,6 @@
             >
               <v-icon>fa-solid fa-plus</v-icon>
               팀추가
-            </v-btn>
-          </div>
-          <div class="next-prev-button-wrapper">
-            <v-btn icon @click="prevButtonHandler">
-              <v-icon>fa-solid fa-angle-left</v-icon>
-              이전
-            </v-btn>
-            <v-btn icon @click="nextButtonHandler">
-              다음
-              <v-icon>fa-solid fa-angle-right</v-icon>
             </v-btn>
           </div>
         </div>
@@ -130,7 +172,7 @@ export default {
         const quarters = ['1쿼터', '2쿼터', '3쿼터', '4쿼터']
         return quarters[(this.count - 1) % 4]
       } else {
-        let quarters
+        let quarters = ''
 
         if (this.teamsLastIndex < 4) {
           quarters = '1쿼터'
@@ -261,6 +303,7 @@ section {
 .title {
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 .match-players-wrapper {
   display: flex;
@@ -289,6 +332,9 @@ section {
 .title {
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: flex-start;
+}
+.button {
+  height: 48px;
 }
 </style>

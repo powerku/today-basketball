@@ -1,5 +1,5 @@
 <template>
-  <v-card class="m-3" tile>
+  <v-card class="m-5" tile>
     <v-list class="players" dense>
       <v-subheader class="justify-content-center" @click="titleClickHandler"
         >{{ team.title }}
@@ -80,6 +80,7 @@ export default {
 }
 .name {
   flex: none;
-  width: 80px;
+  width: 100px;
+  margin-left: 5px;
 }
 </style>
