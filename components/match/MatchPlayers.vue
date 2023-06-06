@@ -1,23 +1,23 @@
 <template>
-  <v-card class="mx-auto" tile>
+  <v-card class="m-3" tile>
     <v-list class="players" dense>
-      <v-subheader class="justify-content-center">{{ team.title }}</v-subheader>
+      <v-subheader class="justify-content-center" @click="titleClickHandler"
+        >{{ team.title }}
+        <v-icon v-if="team.running" class="mx-1">fa-solid fa-basketball</v-icon>
+      </v-subheader>
       <v-list-item-group color="primary">
         <v-list-item v-for="(player, i) in team.players" :key="i">
           <v-list-item-content class="index">
             <v-list-item-title>{{ i + 1 }}번 </v-list-item-title>
           </v-list-item-content>
-          <!--          <v-list-item-content>-->
-          <!--            <v-list-item-title>{{ player.text }}</v-list-item-title>-->
-          <!--          </v-list-item-content>-->
           <v-text-field
             v-model="player.text"
-            class="m-0 p-0"
+            class="m-0 p-0 name"
             hide-details
             placeholder="이름"
           ></v-text-field>
           <v-list-item-icon>
-            <v-icon disabled>{{ player.icon }}</v-icon>
+            <v-icon>{{ player.icon }}</v-icon>
           </v-list-item-icon>
           <v-btn v-if="i > 4" icon x-small @click="removeItem(i)">
             <v-icon>x-small fa-solid fa-minus</v-icon>
@@ -48,6 +48,11 @@ export default {
       default: () => {},
     },
   },
+  data() {
+    return {
+      showEditTitle: false,
+    }
+  },
   methods: {
     removeItem(index) {
       this.$emit('remove:player', this.team.players, index)
@@ -56,8 +61,13 @@ export default {
       this.$emit('add:player')
     },
     editText() {
-      console.log('edit')
       this.$emit('edit:player')
+    },
+    changeTitle(title) {
+      this.$emit('edit:teamTitle', this.team, title)
+    },
+    titleClickHandler() {
+      this.showEditTitle = !this.showEditTitle
     },
   },
 }
@@ -66,9 +76,9 @@ export default {
 <style scoped>
 .v-list-item__content {
   /*flex: none;*/
-  margin-right: 5px;
+  /*margin-right: 5px;*/
 }
-.v-input {
+.name {
   flex: none;
   width: 80px;
 }

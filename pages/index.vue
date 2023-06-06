@@ -1,112 +1,57 @@
 <template>
-  <div>
-    <main class="flex-shrink-0">
-      <!-- Navigation-->
-      <nav class="navbar navbar-expand-lg navbar-light bg-white py-3">
-        <div class="container px-5">
-          <nuxt-link to="/" class="navbar-brand" href="index.html"
-            ><span class="fw-bolder text-primary"
-              >농구 순번 계산기</span
-            ></nuxt-link
-          >
-          <!--          <button-->
-          <!--            class="navbar-toggler"-->
-          <!--            type="button"-->
-          <!--            data-bs-toggle="collapse"-->
-          <!--            data-bs-target="#navbarSupportedContent"-->
-          <!--            aria-controls="navbarSupportedContent"-->
-          <!--            aria-expanded="false"-->
-          <!--            aria-label="Toggle navigation"-->
-          <!--          >-->
-          <!--            <span class="navbar-toggler-icon"></span>-->
-          <!--          </button>-->
-        </div>
-      </nav>
-      <!--       Header-->
-      <header>
-        <div>
-          <div class="gx-5 align-items-center">
-            <!--            <div class="col-xxl-5">-->
-            <!--              &lt;!&ndash; Header text content&ndash;&gt;-->
-            <!--              <div class="text-center text-xxl-start">-->
-            <!--                <div class="gameCard">-->
-            <!--                  <p class="matchUp">-->
-            <!--                    <span>송파청소년수련관</span>-->
-            <!--                  </p>-->
-            <!--                  <div class="GameCardMatchupWrapper">-->
-            <!--                    <article class="GameCardMatchup">-->
-            <!--                      <div-->
-            <!--                        class="MatchupCardTeamName_base__PBkuX"-->
-            <!--                        data-team-id="1610612738"-->
-            <!--                      >-->
-            <!--                        <span class="MatchupCardTeamName_teamName__9YaBA"-->
-            <!--                          >White</span-->
-            <!--                        >-->
-            <!--                      </div>-->
-            <!--                    </article>-->
-            <!--                    <div class="GameCardMatchup_statusWrapper__TDbQz">-->
-            <!--                      <div-->
-            <!--                        class="GameCardMatchup_gameCardMatchupStatusWrapper__8rQ8v"-->
-            <!--                      >-->
-            <!--                        <div-->
-            <!--                          class="GameCardMatchupStatusText_gcs__2yfjE"-->
-            <!--                          data-is-preseason="false"-->
-            <!--                          data-game-status="1"-->
-            <!--                        >-->
-            <!--                          <p class="GameCardMatchupStatusText_gcsText__PcQUX">-->
-            <!--                            2023.05.29 21:00-->
-            <!--                          </p>-->
-            <!--                        </div>-->
-            <!--                      </div>-->
-            <!--                    </div>-->
-            <!--                    <article class="GameCardMatchup">-->
-            <!--                      <div-->
-            <!--                        class="MatchupCardTeamName_base__PBkuX"-->
-            <!--                        data-team-id="1610612738"-->
-            <!--                      >-->
-            <!--                        <span class="MatchupCardTeamName_teamName__9YaBA"-->
-            <!--                          >Black</span-->
-            <!--                        >-->
-            <!--                      </div>-->
-            <!--                    </article>-->
-            <!--                  </div>-->
-            <!--                </div>-->
-            <!--              </div>-->
-            <!--            </div>-->
-            <div>
-              <!-- Header profile picture-->
-              <div class="d-flex justify-content-center mt-xxl-0 flex-column">
-                <div class="title">{{ title }}</div>
-                <div class="match-players-wrapper">
-                  <MatchPlayers
-                    :team="teamA"
-                    @add:player="addPlayer(teamA.players)"
-                    @remove:player="removePlayer"
-                  ></MatchPlayers>
-                  <MatchPlayers
-                    :team="teamB"
-                    @add:player="addPlayer(teamB.players)"
-                    @remove:player="removePlayer"
-                  ></MatchPlayers>
-                </div>
-                <div class="next-prev-button-wrapper">
-                  <v-btn icon @click="prevButtonHandler">
-                    <v-icon>fa-solid fa-angle-left</v-icon>
-                    이전
-                  </v-btn>
-                  <v-btn icon @click="nextButtonHandler">
-                    다음
-                    <v-icon>fa-solid fa-angle-right</v-icon>
-                  </v-btn>
-                </div>
-              </div>
-            </div>
+  <main class="flex-shrink-0">
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white py-3">
+      <div class="container px-5">
+        <nuxt-link to="/" class="navbar-brand" href="index.html"
+          ><span class="fw-bolder text-primary"
+            >농구 순번 계산기</span
+          ></nuxt-link
+        >
+      </div>
+    </nav>
+    <section>
+      <div class="gx-5 align-items-center">
+        <div class="d-flex justify-content-center mt-xxl-0 flex-column">
+          <div class="title">
+            <v-subheader class="h2 justify-content-center mt-xxl-0">{{
+              quarterInfo
+            }}</v-subheader>
+          </div>
+          <div class="match-players-wrapper">
+            <MatchPlayers
+              v-for="(team, i) in teams"
+              :key="i"
+              :team="team"
+              @add:player="addPlayer(team.players)"
+              @remove:player="removePlayer"
+              @edit:teamTitle="changeTitle"
+            ></MatchPlayers>
+            <v-btn
+              v-if="teams.length < 3"
+              class="btnAddTeam mx-3"
+              icon
+              @click="addTeamButtonHandler"
+            >
+              <v-icon>fa-solid fa-plus</v-icon>
+              팀추가
+            </v-btn>
+          </div>
+          <div class="next-prev-button-wrapper">
+            <v-btn icon @click="prevButtonHandler">
+              <v-icon>fa-solid fa-angle-left</v-icon>
+              이전
+            </v-btn>
+            <v-btn icon @click="nextButtonHandler">
+              다음
+              <v-icon>fa-solid fa-angle-right</v-icon>
+            </v-btn>
           </div>
         </div>
-      </header>
-    </main>
+      </div>
+    </section>
     <!-- Footer-->
-    <footer class="bg-white py-4 mt-auto">
+    <footer class="bg-white py-4 mt-auto footer">
       <div class="container px-5">
         <div
           class="row align-items-center justify-content-between flex-column flex-sm-row"
@@ -126,7 +71,7 @@
         </div>
       </div>
     </footer>
-  </div>
+  </main>
 </template>
 
 <script>
@@ -136,51 +81,111 @@ export default {
   name: 'IndexPage',
   components: { MatchPlayers },
   data: () => ({
+    headers: [
+      { text: '팀', value: 'team' },
+      { text: '1쿼터', value: 'quarter1' },
+      { text: '2쿼터', value: 'quarter2' },
+      { text: '3쿼터', value: 'quarter3' },
+      { text: '4쿼터', value: 'quarter4' },
+      { text: '점수', value: 'score' },
+    ],
     count: 1,
-    teamA: {
-      startIndex: 1,
-      lastIndex: 5,
-      title: 'Black',
-      players: [
-        { text: 'Player1', icon: 'fa-solid fa-person-running' },
-        { text: 'Player2', icon: 'fa-solid fa-person-running' },
-        { text: 'Player3', icon: 'fa-solid fa-person-running' },
-        { text: 'Player4', icon: 'fa-solid fa-person-running' },
-        { text: 'Player5', icon: 'fa-solid fa-person-running' },
-        { text: 'Player6', icon: 'fa-solid' },
-        { text: 'Player7', icon: 'fa-solid' },
-      ],
-    },
-    teamB: {
-      startIndex: 1,
-      lastIndex: 5,
-      title: 'White',
-      players: [
-        { text: 'Player1', icon: 'fa-solid fa-person-running' },
-        { text: 'Player2', icon: 'fa-solid fa-person-running' },
-        { text: 'Player3', icon: 'fa-solid fa-person-running' },
-        { text: 'Player4', icon: 'fa-solid fa-person-running' },
-        { text: 'Player5', icon: 'fa-solid fa-person-running' },
-        { text: 'Player6', icon: 'fa-solid' },
-        { text: 'Player7', icon: 'fa-solid' },
-      ],
-    },
+    teams: [
+      {
+        startIndex: 1,
+        lastIndex: 5,
+        title: 'A',
+        running: false,
+        players: [
+          { text: 'Player1', icon: 'fa-solid fa-person-running' },
+          { text: 'Player2', icon: 'fa-solid fa-person-running' },
+          { text: 'Player3', icon: 'fa-solid fa-person-running' },
+          { text: 'Player4', icon: 'fa-solid fa-person-running' },
+          { text: 'Player5', icon: 'fa-solid fa-person-running' },
+          { text: 'Player6', icon: 'fa-solid' },
+          { text: 'Player7', icon: 'fa-solid' },
+        ],
+      },
+      {
+        startIndex: 1,
+        lastIndex: 5,
+        title: 'B',
+        running: false,
+        players: [
+          { text: 'Player1', icon: 'fa-solid fa-person-running' },
+          { text: 'Player2', icon: 'fa-solid fa-person-running' },
+          { text: 'Player3', icon: 'fa-solid fa-person-running' },
+          { text: 'Player4', icon: 'fa-solid fa-person-running' },
+          { text: 'Player5', icon: 'fa-solid fa-person-running' },
+          { text: 'Player6', icon: 'fa-solid' },
+          { text: 'Player7', icon: 'fa-solid' },
+        ],
+      },
+    ],
+    teamsLastIndex: 1,
   }),
   computed: {
-    title() {
-      const quarters = ['1쿼터', '2쿼터', '3쿼터', '4쿼터']
-      return quarters[(this.count - 1) % 4]
+    quarterInfo() {
+      if (this.teams.length < 3) {
+        const quarters = ['1쿼터', '2쿼터', '3쿼터', '4쿼터']
+        return quarters[(this.count - 1) % 4]
+      } else {
+        let quarters
+
+        if (this.teamsLastIndex < 4) {
+          quarters = '1쿼터'
+        } else if (this.teamsLastIndex < 7) {
+          quarters = '2쿼터'
+        } else if (this.teamsLastIndex < 10) {
+          quarters = '3쿼터'
+        } else if (this.teamsLastIndex < 13) {
+          quarters = '4쿼터'
+        }
+        const teamInfo = []
+        this.teams.forEach((team) => {
+          if (team.running) {
+            teamInfo.push(team.title)
+          }
+        })
+        return teamInfo.join(' vs ') + ' ' + quarters
+      }
     },
   },
   methods: {
     nextButtonHandler() {
-      this.selectNextPlayer(this.teamA)
-      this.selectNextPlayer(this.teamB)
+      if (this.teams.length > 2) {
+        // 3파전
+        // 뛴 팀들 다음 차례 사람들
+        this.teams.forEach((team) => {
+          if (team.running) {
+            this.selectNextPlayer(team)
+          }
+        })
+
+        // 팀 교체
+        this.teams.forEach((team) => {
+          team.running = false
+        })
+
+        for (let i = 0; i < 2; i++) {
+          this.teams[
+            this.getCircularIndex(this.teams, this.teamsLastIndex + i)
+          ].running = true
+        }
+
+        this.teamsLastIndex += 1
+      } else {
+        this.teams.forEach((team) => {
+          this.selectNextPlayer(team)
+        })
+      }
+
       this.count++
     },
     prevButtonHandler() {
-      this.selectPrevPlayer(this.teamA)
-      this.selectPrevPlayer(this.teamB)
+      this.teams.forEach((team) => {
+        this.selectPrevPlayer(team)
+      })
     },
     addPlayer(players) {
       const index = players.length + 1
@@ -189,14 +194,18 @@ export default {
     removePlayer(players, index) {
       players.splice(index, 1)
     },
+    changeTitle(team, teamTitle) {
+      team.title = teamTitle
+    },
     selectNextPlayer(team) {
       team.players.forEach((player) => {
         player.icon = 'fa-solid'
       })
 
       for (let i = 0; i < 5; i++) {
-        team.players[this.getCircularIndex(team, team.lastIndex + i)].icon =
-          'fa-solid fa-person-running'
+        team.players[
+          this.getCircularIndex(team.players, team.lastIndex + i)
+        ].icon = 'fa-solid fa-person-running'
       }
       team.lastIndex += 5
     },
@@ -206,21 +215,49 @@ export default {
       })
       const startIndex = team.lastIndex - 5
       for (let i = 5; i > 0; i--) {
-        team.players[this.getCircularIndex(team, startIndex - i)].icon =
+        team.players[this.getCircularIndex(team.players, startIndex - i)].icon =
           'fa-solid fa-person-running'
       }
       team.lastIndex -= 5
     },
-    getCircularIndex(team, index) {
-      const length = team.players.length
-
+    getCircularIndex(arr, index) {
+      const length = arr.length
       return ((index % length) + length) % length
+    },
+    addTeamButtonHandler() {
+      this.teams[0].running = true
+      this.teams[1].running = true
+      this.teams.push({
+        startIndex: 1,
+        lastIndex: 5,
+        title: 'C',
+        running: false,
+        players: [
+          { text: 'Player1', icon: 'fa-solid fa-person-running' },
+          { text: 'Player2', icon: 'fa-solid fa-person-running' },
+          { text: 'Player3', icon: 'fa-solid fa-person-running' },
+          { text: 'Player4', icon: 'fa-solid fa-person-running' },
+          { text: 'Player5', icon: 'fa-solid fa-person-running' },
+          { text: 'Player6', icon: 'fa-solid' },
+          { text: 'Player7', icon: 'fa-solid' },
+        ],
+      })
     },
   },
 }
 </script>
 
 <style scoped>
+main {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+section {
+  flex: 1;
+}
+
 .title {
   display: flex;
   justify-content: center;
@@ -228,7 +265,8 @@ export default {
 .match-players-wrapper {
   display: flex;
   justify-content: center;
-  margin: 0 20px;
+  flex-wrap: wrap;
+  margin: 20px;
 }
 
 .next-prev-button-wrapper {
@@ -238,5 +276,19 @@ export default {
 }
 .next-prev-button-wrapper button:first-child {
   margin-right: 30px;
+}
+
+.btnAddTeam {
+  margin-top: auto;
+  margin-bottom: auto;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+}
+
+.title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 </style>

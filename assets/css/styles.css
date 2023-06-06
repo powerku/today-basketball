@@ -11556,8 +11556,11 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+
+html,
 body,
-html {
+#__nuxt,
+#__layout {
   height: 100%;
 }
 
