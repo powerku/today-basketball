@@ -335,9 +335,9 @@ section {
   align-items: flex-start;
 }
 .nextButton {
-  height: 48px;
+  height: 48px; !important;
 }
 .prevButton {
-  height: 48px;
+  height: 48px; !important;
 }
 </style>
